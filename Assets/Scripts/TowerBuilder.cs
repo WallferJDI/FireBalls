@@ -9,14 +9,7 @@ public class TowerBuilder : MonoBehaviour
     [SerializeField] private TowerSegment _towerSegment;
 
     private List<TowerSegment> _towerSegments;
-
-
-    private void Start()
-    {
-        Build();
-    }
-
-    private List<TowerSegment> Build()
+    public List<TowerSegment> Build()
     {
         _towerSegments = new List<TowerSegment>();
         Transform currentPoint = _buildPoint;
@@ -35,6 +28,6 @@ public class TowerBuilder : MonoBehaviour
 
     private Vector3 GetBuildPoint(Transform currentBuildPoint)
     {
-        return new Vector3(_buildPoint.position.x, currentBuildPoint.position.y + currentBuildPoint.localScale.y/2f, _buildPoint.position.z);
+        return new Vector3(_buildPoint.position.x, currentBuildPoint.position.y + _towerSegment.gameObject.transform.localScale.y/2f, _buildPoint.position.z);
     }
 }

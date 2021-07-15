@@ -9,7 +9,16 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         GetComponent<Rigidbody>().AddForce(Vector3.forward * _force, ForceMode.Impulse);
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1);
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out TowerSegment towerSegment))
+        {
+            towerSegment.Break();
+            Destroy(gameObject);
+        }
     }
 }
