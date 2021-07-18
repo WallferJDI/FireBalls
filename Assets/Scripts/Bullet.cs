@@ -5,12 +5,21 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _force;
+    private Rigidbody _rb;
+    private Vector3 _moveDirection;
 
     private void Start()
     {
-        GetComponent<Rigidbody>().AddForce(Vector3.forward * _force, ForceMode.Impulse);
-        Destroy(gameObject, 1);
+        _rb = GetComponent<Rigidbody>();
+        _moveDirection = Vector3.forward;
+        Destroy(gameObject, 2);
 
+    }
+
+
+    private void Update()
+    {
+        transform.Translate(_moveDirection * _force * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -20,5 +29,15 @@ public class Bullet : MonoBehaviour
             towerSegment.Break();
             Destroy(gameObject);
         }
+        if(collision.gameObject.TryGetComponent(out Barrier barrier))
+        {
+            Bounce();
+        }
+    }
+
+    private void Bounce()
+    {
+        _moveDirection = Vector3.back + Vector3.up;
+        _rb.AddExplosionForce(100, transform.position + new Vector3(0, -1, 1), 100);
     }
 }
