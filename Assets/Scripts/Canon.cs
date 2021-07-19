@@ -29,6 +29,7 @@ public  class Canon : MonoBehaviour
     private void Fire()
     {
       Instantiate(_bulletPrefab, _firePoint.position, Quaternion.identity);
+        Recoil();
     }
 
     private void Recoil() 

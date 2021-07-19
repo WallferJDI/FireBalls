@@ -6,6 +6,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(TowerBuilder))]
 public class Tower : MonoBehaviour
 {
+    [SerializeField] private float _towerHeightOffset;
     private TowerBuilder _towerBuilder;
     private List<TowerSegment> _towerSegments;
 
@@ -32,7 +33,7 @@ public class Tower : MonoBehaviour
 
         foreach (var segment in _towerSegments)
         {
-            segment.transform.position = new Vector3(segment.transform.position.x, segment.transform.position.y - segment.transform.localScale.y/2f, segment.transform.position.z);
+            segment.transform.position = new Vector3(segment.transform.position.x, segment.transform.position.y - segment.transform.localScale.y/2f - _towerHeightOffset, segment.transform.position.z);
         }
         SizeUpdated?.Invoke(_towerSegments.Count);
     }
